@@ -1,22 +1,45 @@
 import React, { useContext } from 'react'
 import { Context } from '..'
 import {Button, Container, Nav, Navbar} from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
-import { STREAMS_ROUTE } from '../utils/consts'
+import { NavLink, useHistory } from 'react-router-dom'
+import { ARCHIVE_ROUTE, LOGIN_ROUTE, SETTINGS_ROUTE, STREAMS_ROUTE } from '../utils/consts'
 import {observer} from 'mobx-react-lite'
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
+    const history = useHistory()
+
     return (
         <Navbar bg="light" variant="light">
             <Container>
-                <NavLink style={{color: 'black', fontSize: 18}} to={STREAMS_ROUTE}>Управление трансляциями 360</NavLink>
+                <h3>Управление трансляциями 360</h3>
                 {user.isAuth ?
                     <Nav className="ml-auto">
-                        <Nav.Link href="/streams">Трансляции</Nav.Link>
-                        <Nav.Link href="/settings">Настройки</Nav.Link>
-                        <Nav.Link href="/archive">Архив</Nav.Link>
-                        <Button variant={'outline-dark'} className="ml-4">Выйти</Button>
+                        <NavLink
+                            activeStyle={{color: 'lightblue'}}
+                            className="mt-1 pr-3"
+                            style={{color: 'black', fontSize: 16, textDecoration: 'none'}}
+                            to={STREAMS_ROUTE}
+                            exact>
+                            Трансляции
+                        </NavLink>
+                        <NavLink
+                            activeStyle={{color: 'lightblue'}}
+                            className="mt-1 pr-3"
+                            style={{color: 'black', fontSize: 16, textDecoration: 'none'}}
+                            to={SETTINGS_ROUTE}
+                            exact>
+                            Настройки
+                        </NavLink>
+                        <NavLink
+                            activeStyle={{color: 'lightblue'}}
+                            className="mt-1 pr-3"
+                            style={{color: 'black', fontSize: 16, textDecoration: 'none'}}
+                            to={ARCHIVE_ROUTE}
+                            exact>
+                            Архив
+                        </NavLink>
+                        <Button variant={'outline-dark'} className="ml-4" onClick={() => history.push(LOGIN_ROUTE)}>Выйти</Button>
                     </Nav>
                     :
                     <Nav className="ml-auto">
