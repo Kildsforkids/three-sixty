@@ -1,0 +1,5 @@
+export const LOGIN_ROUTE = '/login'
+export const REGISTRATION_ROUTE = '/registration'
+export const STREAMS_ROUTE = '/streams'
+export const SETTINGS_ROUTE = '/settings'
+export const ARCHIVE_ROUTE = '/archive'
