@@ -9,6 +9,11 @@ const NavBar = observer(() => {
     const {user} = useContext(Context)
     const history = useHistory()
 
+    const logOut = () => {
+        user.setUser({})
+        user.setIsAuth(false)
+    }
+
     return (
         <Navbar bg="light" variant="light">
             <Container>
@@ -39,11 +44,11 @@ const NavBar = observer(() => {
                             exact>
                             Архив
                         </NavLink>
-                        <Button variant={'outline-dark'} className="ml-4" onClick={() => history.push(LOGIN_ROUTE)}>Выйти</Button>
+                        <Button variant={'outline-dark'} className="ml-4" onClick={() => logOut()}>Выйти</Button>
                     </Nav>
                     :
                     <Nav className="ml-auto">
-                        <Button variant={'outline-dark'} onClick={() => user.setIsAuth(true)}>Войти</Button>
+                        <Button variant={'outline-dark'} onClick={() => history.push(LOGIN_ROUTE)}>Войти</Button>
                     </Nav>
                 }
             </Container>

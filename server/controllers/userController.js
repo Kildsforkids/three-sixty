@@ -41,9 +41,15 @@ class UserController {
         return res.json({token})
     }
 
-    async check(req, res, next) {
+    async check(req, res) {
         const token = generateJwt(req.user.id, req.user.login, req.user.role)
         return res.json({token})
+    }
+
+    async getAll(req, res) {
+        const users = await User.findAll()
+        const logins = users.map(user => {return {id: user.id, login: user.login}})
+        return res.json(logins)
     }
 }
 

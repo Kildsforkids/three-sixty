@@ -16,7 +16,7 @@ const CameraPreview = ({camera, setSelectedCamera}) => {
                     </video>
                 </div>
                 <div>
-                    {camera.ip}
+                    {`Camera ${camera.id}`}
                 </div>
             </Card>
         </Col>

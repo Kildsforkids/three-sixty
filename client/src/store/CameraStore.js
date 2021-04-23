@@ -15,6 +15,7 @@ export default class CameraStore {
             {id: 4, ip: '192.168.1.103', classroomId: 3},
             {id: 5, ip: '192.168.1.104', classroomId: 3},
         ]
+        this._selectedClassroom = {}
         makeAutoObservable(this)
     }
 
@@ -26,11 +27,19 @@ export default class CameraStore {
         this._cameras = cameras
     }
 
+    setSelectedClassroom(classroom) {
+        this._selectedClassroom = classroom
+    }
+
     get classrooms() {
         return this._classrooms
     }
 
     get cameras() {
         return this._cameras
+    }
+
+    get selectedClassroom() {
+        return this._selectedClassroom
     }
 }
