@@ -12,12 +12,12 @@ const App = observer(() => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
+    // setTimeout(() => {
       check().then(data => {
-        user.setUser(true)
+        user.setUser(data)
         user.setIsAuth(true)
       }).finally(() => setLoading(false))
-    }, 1000)
+    // }, 1000)
   }, [])
 
   if (loading) {

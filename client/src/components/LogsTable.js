@@ -2,13 +2,14 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import {Table} from 'react-bootstrap'
 import { Context } from '../index'
-import {fetchActionTypes, fetchLogs, fetchUsers} from '../http/logAPI'
+import {fetchLogs, fetchUsers} from '../http/logAPI'
+import { getDate, LOG_CONSTS } from '../utils/consts'
 
 const LogsTable = observer(() => {
     const {logger} = useContext(Context)
 
     useEffect(() => {
-        fetchActionTypes().then(data => logger.setActionTypes(data))
+        // fetchActionTypes().then(data => logger.setActionTypes(data))
         fetchLogs().then(data => logger.setLogs(data))
         fetchUsers().then(data => logger.setUsers(data))
     }, [])
@@ -26,9 +27,13 @@ const LogsTable = observer(() => {
             <tbody>
                 {logger.logs.map(log =>
                     <tr key={log.id}>
-                        <td>20.04.2021 15:00</td>
+                        <td>
+                        {
+                            getDate(log.updatedAt)
+                        }
+                        </td>
                         <td>{logger.users.find(user => user.id === log.userId).login}</td>
-                        <td>{logger.actionTypes.find(action => action.id  === log.actionId)?.name}</td>
+                        <td>{LOG_CONSTS[log.actionType-1]}</td>
                         <td>{log.description}</td>
                     </tr>
                 )}

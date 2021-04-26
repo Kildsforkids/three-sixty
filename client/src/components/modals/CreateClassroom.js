@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Modal, Button, Form} from 'react-bootstrap'
+import { Context } from '../..'
 import { createClassroom } from '../../http/cameraAPI'
+import { createLog } from '../../http/logAPI'
 
 const CreateClassroom = ({show, onHide}) => {
+    const {user} = useContext(Context)
     const [name, setName] = useState('')
     const [capacity, setCapacity] = useState(0)
 
@@ -11,6 +14,7 @@ const CreateClassroom = ({show, onHide}) => {
             setName('')
             setCapacity(0)
             onHide()
+            createLog({userId: user.user.id, actionType: 2, description: `${data.name}, ${data.capacity}`})
         })
     }
 

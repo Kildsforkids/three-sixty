@@ -9,11 +9,11 @@ const PreviewPanel = observer(() => {
     const {camera} = useContext(Context)
     const [selectedCamera, setSelectedCamera] = useState(null)
 
-    useEffect(() => {
-        if (selectedCamera) {
-            console.log(`Была выбрана камера с ID: ${selectedCamera.id}`)
-        }
-    }, [selectedCamera])
+    // useEffect(() => {
+    //     if (selectedCamera) {
+    //         console.log(`Была выбрана камера с ID: ${selectedCamera.id}`)
+    //     }
+    // }, [selectedCamera])
 
     return (
         <>

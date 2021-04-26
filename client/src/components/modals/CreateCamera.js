@@ -2,10 +2,11 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useState, useEffect } from 'react'
 import {Modal, Button, Form, Dropdown} from 'react-bootstrap'
 import { createCamera, fetchClassrooms } from '../../http/cameraAPI'
+import { createLog } from '../../http/logAPI'
 import { Context } from '../../index'
 
 const CreateCamera = observer(({show, onHide}) => {
-    const {camera} = useContext(Context)
+    const {camera, user} = useContext(Context)
     const [ip, setIP] = useState('')
 
     useEffect(() => {
@@ -13,10 +14,13 @@ const CreateCamera = observer(({show, onHide}) => {
     }, [])
 
     const addCamera = () => {
-        const formData = new FormData()
-        formData.append('ip', ip)
-        formData.append('classroomId', camera.selectedClassroom.id)
-        createCamera(formData).then(data => onHide())
+        createCamera({
+            ip: ip,
+            classroomId: camera.selectedClassroom.id
+        }).then(data => {
+            onHide()
+            createLog({userId: user.user.id, actionType: 1, description: `Camera ${data.id}`})
+        })
     }
 
     return (

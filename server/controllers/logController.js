@@ -3,8 +3,8 @@ const ApiError = require('../error/ApiError')
 
 class LogController {
     async create(req, res) {
-        const {userId, actionId, description} = req.body
-        const log = await Log.create({userId, actionId, description})
+        const {userId, actionType, description} = req.body
+        const log = await Log.create({userId, actionType, description})
         return res.json(log)
     }
 

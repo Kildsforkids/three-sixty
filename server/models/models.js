@@ -1,5 +1,5 @@
 const sequelize = require('../db')
-const {DataTypes, INTEGER, STRING} = require('sequelize')
+const {DataTypes} = require('sequelize')
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -16,18 +16,27 @@ const Camera = sequelize.define('camera', {
 const ClassRoom = sequelize.define('classroom', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
-    capacity: {type: INTEGER}
+    capacity: {type: DataTypes.INTEGER}
 })
 
 const Log = sequelize.define('log', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    actionType: {type: DataTypes.INTEGER, allowNull: false},
     description: {type: DataTypes.STRING}
 })
 
-const Action = sequelize.define('action', {
-    id: {type: INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: STRING, unique: true, allowNull: false}
+const Stream = sequelize.define('stream', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING},
+    link: {type: DataTypes.STRING},
+    time_start: {type: DataTypes.DATE, allowNull: false},
+    time_end: {type: DataTypes.DATE, allowNull: false}
 })
+
+// const Action = sequelize.define('action', {
+//     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
+//     name: {type: STRING, unique: true, allowNull: false}
+// })
 
 User.hasMany(Log)
 Log.belongsTo(User)
@@ -35,13 +44,17 @@ Log.belongsTo(User)
 ClassRoom.hasMany(Camera)
 Camera.belongsTo(ClassRoom)
 
-Action.hasMany(Log)
-Log.belongsTo(Action)
+Camera.hasMany(Stream)
+Stream.belongsTo(Camera)
+
+// Action.hasMany(Log)
+// Log.belongsTo(Action)
 
 module.exports = {
     User,
     Camera,
     ClassRoom,
     Log,
-    Action
+    Stream
+    // Action
 }

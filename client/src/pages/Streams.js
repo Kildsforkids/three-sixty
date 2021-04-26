@@ -5,7 +5,7 @@ import { Context } from '..'
 import PreviewPanel from '../components/PreviewPanel'
 import StreamsSchedule from '../components/StreamsSchedule'
 import { fetchCameras, fetchClassrooms } from '../http/cameraAPI'
-import { fetchActionTypes } from '../http/logAPI'
+// import { fetchActionTypes } from '../http/logAPI'
 
 const Streams = observer(() => {
     const {camera} = useContext(Context)

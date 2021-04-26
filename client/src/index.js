@@ -5,6 +5,7 @@ import LogStore from './store/LogStore'
 import CameraStore from './store/CameraStore';
 import UserStore from './store/UserStore';
 import ScheduleStore from './store/ScheduleStore'
+import StreamStore from './store/StreamStore';
 
 export const Context = createContext(null)
 
@@ -13,7 +14,8 @@ ReactDOM.render(
     user: new UserStore(),
     camera: new CameraStore(),
     logger: new LogStore(),
-    schedule: new ScheduleStore()
+    schedule: new ScheduleStore(),
+    streamStore: new StreamStore()
   }}>
     <App />
   </Context.Provider>,

@@ -3,13 +3,15 @@ const router = new Router()
 const userRouter = require('./userRouter')
 const cameraRouter = require('./cameraRouter')
 const logRouter = require('./logRouter')
-const actionRouter = require('./actionRouter')
+// const actionRouter = require('./actionRouter')
 const classroomRouter = require('./classroomRouter')
+const streamRouter = require('./streamRouter')
 
 router.use('/user', userRouter)
 router.use('/camera', cameraRouter)
 router.use('/log', logRouter)
-router.use('/action', actionRouter)
+// router.use('/action', actionRouter)
 router.use('/classroom', classroomRouter)
+router.use('/stream', streamRouter)
 
 module.exports = router

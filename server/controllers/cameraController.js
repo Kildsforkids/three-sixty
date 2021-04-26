@@ -4,12 +4,11 @@ class CameraController {
     async create(req, res) {
         const {ip, classroomId} = req.body
         const camera = await Camera.create({ip, classroomId})
-
         return res.json(camera)
     }
 
     async getAll(req, res) {
-        cameras = await Camera.findAll()
+        const cameras = await Camera.findAll()
         return res.json(cameras)
     }
 

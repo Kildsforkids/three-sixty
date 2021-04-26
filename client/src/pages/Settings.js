@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import CreateCamera from '../components/modals/CreateCamera'
-import CreateActionType from '../components/modals/CreateActionType'
+// import CreateActionType from '../components/modals/CreateActionType'
 import CreateClassroom from '../components/modals/CreateClassroom'
+import CreateStream from '../components/modals/CreateStream'
 
 const Settings = () => {
-    const [actionTypeVisible, setActionTypeVisible] = useState(false)
+    const [streamVisible, setStreamVisible] = useState(false)
     const [classroomVisible, setClassroomVisible] = useState(false)
     const [cameraVisible, setCameraVisible] = useState(false)
 
@@ -26,12 +27,13 @@ const Settings = () => {
             <Button
                 variant={'outline-dark'}
                 className="mt-4 p-2"
-                onClick={() => setActionTypeVisible(true)}>
-                Добавить тип события
+                onClick={() => setStreamVisible(true)}>
+                Запланировать трансляцию
             </Button>
             <CreateCamera show={cameraVisible} onHide={() => setCameraVisible(false)} />
             <CreateClassroom show={classroomVisible} onHide={() => setClassroomVisible(false)} />
-            <CreateActionType show={actionTypeVisible} onHide={() => setActionTypeVisible(false)} />
+            <CreateStream show={streamVisible} onHide={() => setStreamVisible(false)} />
+            {/* <CreateActionType show={actionTypeVisible} onHide={() => setActionTypeVisible(false)} /> */}
         </Container>
     )
 }

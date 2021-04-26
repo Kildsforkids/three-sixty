@@ -1,10 +1,17 @@
 import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Context } from '../index'
 import {Col, Container, Row, Table, Badge} from 'react-bootstrap'
+import { fetchStreams } from '../http/streamAPI'
+import { getDate } from '../utils/consts'
 
 const StreamsSchedule = observer(() => {
-    const {schedule} = useContext(Context)
+    const {streamStore} = useContext(Context)
+
+    useEffect(() => {
+        fetchStreams().then(data => streamStore.setStreams(data))
+    }, [])
+
     return (
         <Container className="mt-3">
             <Row>
@@ -49,27 +56,15 @@ const StreamsSchedule = observer(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>01.06.2021 15:00</td>
-                            <td>1632</td>
-                            <td>Тестовая трансляция</td>
-                            <td>https://youtube.com</td>
-                            <td>Ожидает начала</td>
-                        </tr>
-                        <tr>
-                            <td>02.06.2021 15:00</td>
-                            <td>1632</td>
-                            <td>Тестовая трансляция</td>
-                            <td>https://youtube.com</td>
-                            <td>Ожидает начала</td>
-                        </tr>
-                        <tr>
-                            <td>03.06.2021 15:00</td>
-                            <td>1523</td>
-                            <td>Тестовая трансляция</td>
-                            <td>https://youtube.com</td>
-                            <td>Ожидает начала</td>
-                        </tr>
+                        {streamStore.streams.map(stream =>
+                            <tr key={stream.id}>
+                                <td>{getDate(stream.time_start)}</td>
+                                <td>1632</td>
+                                <td>{stream.name}</td>
+                                <td>{stream.link}</td>
+                                <td>Ожидает начала</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table>
             </Row>

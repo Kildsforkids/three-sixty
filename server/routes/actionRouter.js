@@ -1,8 +1,8 @@
-const Router = require('express')
-const router = new Router()
-const actionController = require('../controllers/actionController')
+// const Router = require('express')
+// const router = new Router()
+// const actionController = require('../controllers/actionController')
 
-router.post('/', actionController.create)
-router.get('/', actionController.getAll)
+// router.post('/', actionController.create)
+// router.get('/', actionController.getAll)
 
-module.exports = router
+// module.exports = router
