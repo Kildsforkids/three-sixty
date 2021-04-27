@@ -15,30 +15,36 @@ const LogsTable = observer(() => {
     }, [])
 
     return (
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>Время</th>
-                    <th>Пользователь</th>
-                    <th>Тип события</th>
-                    <th>Дополнительно</th>
-                </tr>
-            </thead>
-            <tbody>
-                {logger.logs.map(log =>
-                    <tr key={log.id}>
-                        <td>
-                        {
-                            getDate(log.updatedAt)
-                        }
-                        </td>
-                        <td>{logger.users.find(user => user.id === log.userId).login}</td>
-                        <td>{LOG_CONSTS[log.actionType-1]}</td>
-                        <td>{log.description}</td>
+        <>
+        {logger.logs.length > 0 ?
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>Пользователь</th>
+                        <th>Тип события</th>
+                        <th>Дополнительно</th>
                     </tr>
-                )}
-            </tbody>
-        </Table>
+                </thead>
+                <tbody>
+                    {logger.logs.map(log =>
+                        <tr key={log.id}>
+                            <td>
+                            {
+                                getDate(log.updatedAt)
+                            }
+                            </td>
+                            <td>{logger.users.find(user => user.id === log.userId).login}</td>
+                            <td>{LOG_CONSTS[log.actionType-1]}</td>
+                            <td>{log.description}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </Table>
+            :
+            <h5>Нет записей в архиве</h5>
+        }
+        </>
     )
 })
 

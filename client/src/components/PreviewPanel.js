@@ -17,9 +17,10 @@ const PreviewPanel = observer(() => {
 
     return (
         <>
-            {selectedCamera ?
+        {camera.cameras.length > 0 ?
+            selectedCamera ?
                 <Row className="mt-3 d-flex justify-content-md-center">
-                    <CameraDetails camera={selectedCamera} />
+                    <CameraDetails selectedCamera={selectedCamera} />
                     <Row className="mt-3 d-flex justify-content-md-center">
                         {camera.cameras.map(camera =>
                             camera.id !== selectedCamera.id &&
@@ -33,7 +34,9 @@ const PreviewPanel = observer(() => {
                         <CameraPreview key={camera.id} camera={camera} setSelectedCamera={setSelectedCamera} />
                     )}
                 </Row>
-            }
+            :
+            <h5>Нет привязанных камер</h5>
+        }
         </>
     )
 })

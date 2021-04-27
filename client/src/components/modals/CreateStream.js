@@ -23,7 +23,7 @@ const CreateStream = observer(({show, onHide}) => {
             link: 'https://www.youtube.com'
         }).then(data => {
             onHide()
-            createLog({userId: user.user.id, actionType: 3, description: `Stream: ${data.name}`})
+            createLog({userId: user.user.id, actionType: 3, description: data.name})
         })
     }
 
@@ -47,13 +47,19 @@ const CreateStream = observer(({show, onHide}) => {
                         placeholder={'Введите название трансляции'}
                     />
                     <Dropdown className="mt-3">
-                        <Dropdown.Toggle>{camera.selectedCamera.id ? `Camera ${camera.selectedCamera.id}` : 'Выберите камеру'}</Dropdown.Toggle>
+                        <Dropdown.Toggle>
+                            {camera.selectedCamera.classroomId ?
+                                camera.classrooms.find(i => i.id === camera.selectedCamera.classroomId).name
+                                :
+                                'Выберите аудиторию'
+                            }
+                        </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {camera.cameras.map(item =>
                                 <Dropdown.Item
                                     onClick={() => camera.setSelectedCamera(item)}
                                     key={item.id}>
-                                    {`Camera ${item.id}`}
+                                    {camera.classrooms.find(i => i.id === item.classroomId).name}
                                 </Dropdown.Item>
                             )}
                         </Dropdown.Menu>
