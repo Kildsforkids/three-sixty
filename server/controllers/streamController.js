@@ -12,6 +12,13 @@ class StreamController {
         const streams = await Stream.findAll()
         return res.json(streams)
     }
+
+    async remove(req, res) {
+        const id = req.params.id
+        console.log(id ? id : 0)
+        const data = await Stream.destroy({where: {id}})
+        return res.json(data)
+    }
 }
 
 module.exports = new StreamController()

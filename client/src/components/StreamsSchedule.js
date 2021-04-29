@@ -2,27 +2,33 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { Context } from '../index'
 import {Col, Container, Row, Table, Badge, Button} from 'react-bootstrap'
-import { fetchStreams } from '../http/streamAPI'
+import { deleteStream, fetchStreams } from '../http/streamAPI'
 import { getDate } from '../utils/consts'
+import { createLog } from '../http/logAPI'
+import { fetchCameras, fetchClassrooms } from '../http/cameraAPI'
 
 const StreamsSchedule = observer(() => {
-    const {streamStore, camera} = useContext(Context)
+    const {streamStore, camera, user} = useContext(Context)
 
     useEffect(() => {
+        fetchCameras().then(data => camera.setCameras(data))
         fetchStreams().then(data => streamStore.setStreams(data))
+        fetchClassrooms().then(data => camera.setClassrooms(data))
     }, [])
 
     const addStream = () => {
-        console.log([...streamStore.streams, {}])
-        streamStore.setStreams([...streamStore.streams, {id: 0, time_start: "", cameraId: 1, name: "Новое событие", link: "link"}])
+        streamStore.setStreams([...streamStore.streams, {id: 0, time_start: Date.now(), cameraId: 1, name: "Новое событие", link: "link"}])
     }
 
     const removeStream = (id) => {
+        const description = streamStore.streams.find(i => i.id === id)?.name
+        if (id > 0) deleteStream(id)?.then(data => console.log(data))
         streamStore.setStreams(streamStore.streams.filter(i => i.id !== id))
+        if (id > 0) createLog({userId: user.user.id, actionType: 4, description: description})
     }
 
     const getClassroom = (cameraId) => {
-        const classroomId = camera.cameras.find(i => i.id === cameraId).classroomId
+        const classroomId = camera.cameras.find(i => i.id === cameraId)?.classroomId
         return camera.classrooms.find(i => i.id === classroomId)
     }
 
@@ -81,9 +87,9 @@ const StreamsSchedule = observer(() => {
                             {streamStore.streams.map((stream, index) =>
                                 <tr key={index}>
                                     <td>{getDate(stream.time_start)}</td>
-                                    <td>{getClassroom(stream.cameraId).name}</td>
+                                    <td>{getClassroom(stream.cameraId)?.name}</td>
                                     <td>{stream.name}</td>
-                                    <td><a href={stream.link} target="_blank">{stream.link}</a></td>
+                                    <td><a href={stream.link} target="_blank" rel="noreferrer">{stream.link}</a></td>
                                     <td>Ожидает начала</td>
                                     <td>
                                         <Button

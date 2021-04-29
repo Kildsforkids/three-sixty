@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import { Context } from '../index'
 import CameraDetails from './CameraDetails'
@@ -8,12 +8,6 @@ import CameraPreview from './CameraPreview'
 const PreviewPanel = observer(() => {
     const {camera} = useContext(Context)
     const [selectedCamera, setSelectedCamera] = useState(null)
-
-    // useEffect(() => {
-    //     if (selectedCamera) {
-    //         console.log(`Была выбрана камера с ID: ${selectedCamera.id}`)
-    //     }
-    // }, [selectedCamera])
 
     return (
         <>

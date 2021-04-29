@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useState, useEffect } from 'react'
 import {Modal, Button, Form, Dropdown} from 'react-bootstrap'
-import { createCamera, fetchCameras, fetchClassrooms } from '../../http/cameraAPI'
+import { fetchCameras } from '../../http/cameraAPI'
 import { createLog } from '../../http/logAPI'
 import { createStream } from '../../http/streamAPI'
 import { Context } from '../../index'

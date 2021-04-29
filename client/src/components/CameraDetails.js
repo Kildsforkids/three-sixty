@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Button, Col, Container, OverlayTrigger, Row, Tab, Tabs, Tooltip } from 'react-bootstrap'
+import { Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap'
 import { Context } from '..'
 import plug from '../assets/plug.png'
 
@@ -33,7 +33,11 @@ const CameraDetails = ({selectedCamera}) => {
                             </Tab>
                             <Tab eventKey="youtube" title="YouTube">
                                 <div className="d-flex justify-content-center">
-                                    <iframe src="https://www.youtube.com/embed/cNtE-80Y1EY" width="480" height="271">
+                                    <iframe
+                                        title={`Camera ${selectedCamera.id}`}
+                                        src="https://www.youtube.com/embed/cNtE-80Y1EY"
+                                        width="480"
+                                        height="271">
                                         Ваш браузер не поддерживает фреймы
                                     </iframe>
                                 </div>

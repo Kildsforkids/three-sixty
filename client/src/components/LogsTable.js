@@ -34,7 +34,7 @@ const LogsTable = observer(() => {
                                 getDate(log.updatedAt)
                             }
                             </td>
-                            <td>{logger.users.find(user => user.id === log.userId).login}</td>
+                            <td>{logger.users.find(user => user.id === log.userId)?.login}</td>
                             <td>{LOG_CONSTS[log.actionType-1]}</td>
                             <td>{log.description}</td>
                         </tr>

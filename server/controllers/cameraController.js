@@ -12,6 +12,11 @@ class CameraController {
         return res.json(cameras)
     }
 
+    async getAll() {
+        const cameras = await Camera.findAll()
+        return cameras
+    }
+
     async getOne(req, res) {
         const {id} = req.params
         const camera = await Camera.findOne({where: {id}})

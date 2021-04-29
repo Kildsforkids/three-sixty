@@ -1,4 +1,4 @@
-import {$authHost, $host} from './index'
+import {$authHost} from './index'
 
 export const createClassroom = async (classroom) => {
     const {data} = await $authHost.post('api/classroom', classroom)

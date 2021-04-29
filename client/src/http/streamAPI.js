@@ -1,4 +1,4 @@
-import {$authHost, $host} from './index'
+import {$authHost} from './index'
 
 export const createStream = async (stream) => {
     const {data} = await $authHost.post('api/stream', stream)
@@ -6,6 +6,11 @@ export const createStream = async (stream) => {
 }
 
 export const fetchStreams = async () => {
-    const {data} = await $host.get('api/stream')
+    const {data} = await $authHost.get('api/stream')
+    return data
+}
+
+export const deleteStream = async (id) => {
+    const {data} = await $authHost.delete(`api/stream/${id}`)
     return data
 }
