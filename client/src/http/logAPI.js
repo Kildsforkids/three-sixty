@@ -1,15 +1,5 @@
 import {$authHost} from './index'
 
-// export const createActionType = async (actionType) => {
-//     const {data} = await $authHost.post('api/action', actionType)
-//     return data
-// }
-
-// export const fetchActionTypes = async () => {
-//     const {data} = await $host.get('api/action')
-//     return data
-// }
-
 export const createLog = async (log) => {
     const {data} = await $authHost.post('api/log', log)
     return data

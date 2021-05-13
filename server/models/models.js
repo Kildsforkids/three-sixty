@@ -33,11 +33,6 @@ const Stream = sequelize.define('stream', {
     time_end: {type: DataTypes.DATE, allowNull: false}
 })
 
-// const Action = sequelize.define('action', {
-//     id: {type: INTEGER, primaryKey: true, autoIncrement: true},
-//     name: {type: STRING, unique: true, allowNull: false}
-// })
-
 User.hasMany(Log)
 Log.belongsTo(User)
 
@@ -47,14 +42,10 @@ Camera.belongsTo(ClassRoom)
 Camera.hasMany(Stream)
 Stream.belongsTo(Camera)
 
-// Action.hasMany(Log)
-// Log.belongsTo(Action)
-
 module.exports = {
     User,
     Camera,
     ClassRoom,
     Log,
     Stream
-    // Action
 }
