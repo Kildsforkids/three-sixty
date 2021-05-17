@@ -39,9 +39,15 @@ class CameraController {
     }
 
     async create(req, res) {
-        const {ip, classroomId} = req.body
-        const camera = await Camera.create({ip, classroomId})
-        return res.json(camera)
+        try {
+            const {ip, classroomId} = req.body
+            const camera = await Camera.create({ip, classroomId})
+            this.connectCamera(ip)
+            return res.json(camera)
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     async getAll(req, res) {
@@ -50,8 +56,13 @@ class CameraController {
     }
 
     async getAllInside() {
-        const cameras = await Camera.findAll()
-        return cameras
+        try {
+            const cameras = await Camera.findAll()
+            return cameras
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     async getOne(req, res) {
@@ -59,6 +70,12 @@ class CameraController {
         const camera = await Camera.findOne({where: {id}})
         return res.json(camera)
     }
+
+    // async getOneByIP(req, res) {
+    //     const {ip} = req.params
+    //     const camera = await Camera.findOne({where: {ip}})
+    //     return res.json(camera)
+    // }
 }
 
 module.exports = new CameraController()

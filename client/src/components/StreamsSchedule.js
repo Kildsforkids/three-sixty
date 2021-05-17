@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext, useEffect } from 'react'
 import { Context } from '../index'
 import {Col, Container, Row, Table, Badge, Button} from 'react-bootstrap'
-import { deleteStream, fetchStreams } from '../http/streamAPI'
+import { deleteStream, fetchStreams, fetchYoutubeEvents } from '../http/streamAPI'
 import { getDate } from '../utils/consts'
 import { createLog } from '../http/logAPI'
 import { fetchCameras, fetchClassrooms } from '../http/cameraAPI'
@@ -13,6 +13,7 @@ const StreamsSchedule = observer(() => {
     useEffect(() => {
         fetchCameras().then(data => camera.setCameras(data))
         fetchStreams().then(data => streamStore.setStreams(data))
+        // fetchYoutubeEvents().then(data => streamStore.setYoutubeEvents(data))
         fetchClassrooms().then(data => camera.setClassrooms(data))
     }, [])
 

@@ -7,7 +7,6 @@ const opn = require('open')
 const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const cameraController = require('./controllers/cameraController')
-// const streamController = require('./controllers/streamController')
 
 const PORT = process.env.PORT || 5000
 
@@ -15,7 +14,9 @@ const client = {
     id: process.env.GOOGLE_CLIENT_ID,
     secret: process.env.GOOGLE_CLIENT_SECRET,
     redirect_url: `http://localhost:${PORT}/api/stream/auth`,
-    scope: 'https://www.googleapis.com/auth/youtube.readonly'
+    scope: [
+        'https://www.googleapis.com/auth/youtube.readonly'
+    ]
 }
 const oauth2Client = new google.Auth.OAuth2Client(client.id, client.secret, client.redirect_url)
 const youtube = new google.youtube_v3.Youtube({ auth: oauth2Client })
@@ -37,20 +38,28 @@ const getAccessToken = (code) => {
 }
 
 const getAllStreams = async () => {
-    await youtube.liveBroadcasts.list({
-        part: ['snippet,contentDetails,status'],
-        broadcastStatus: 'all',
-        access_token: oauth2Client.credentials
-    })
-    .then(response => {
-        response.data.items.map(item => {
-            console.log(item.id)
+    try {
+        return await youtube.liveBroadcasts.list({
+            part: ['snippet,contentDetails,status'],
+            broadcastStatus: 'all',
+            access_token: oauth2Client.credentials
         })
-        return response.data.items
-    })
-    .catch(error => {
-        console.error(error)
-    })
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
+
+const findCameras = async () => {
+    cameraController.getAllInside()
+        .then(cameras => {
+            cameras.map(camera => {
+                cameraController.connectCamera(camera.dataValues.ip)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 const app = express()
@@ -66,8 +75,9 @@ app.get('/api/stream/auth', async (req, res) => {
 app.get('/api/stream/list', async (req, res) => {
     getAllStreams()
         .then(response => {
-            console.log(response)
-            res.status(200).json({ response })
+            const result = response.data.items.map(item => item.id)
+            console.log(result)
+            res.status(200).json({ result })
         })
         .catch(error => {
             console.log(error)
@@ -83,17 +93,7 @@ const start = async () => {
         await sequelize.authenticate()
         await sequelize.sync()
         app.listen(PORT, () => console.log(`Server has been started on port ${PORT}`))
-        // const cameras = await cameraController.getAllInside()
-        // cameras.map(async (camera) => {
-        //     await cameraController.connectCamera(camera.dataValues.ip)
-        // })
-        // const client = {
-        //     id: process.env.GOOGLE_CLIENT_ID,
-        //     secret: process.env.GOOGLE_CLIENT_SECRET,
-        //     redirect_url: `http://localhost:${PORT}/api/stream/auth`,
-        //     scope: 'https://www.googleapis.com/auth/youtube.readonly'
-        // }
-        // streamController.authenticate()
+        // findCameras()
         googleAuth()
     } catch (e) {
         console.log(e)

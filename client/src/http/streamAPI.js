@@ -14,3 +14,8 @@ export const deleteStream = async (id) => {
     const {data} = await $authHost.delete(`api/stream/${id}`)
     return data
 }
+
+export const fetchYoutubeEvents = async () => {
+    const {data} = await $authHost.get('api/stream/list')
+    return data
+}
